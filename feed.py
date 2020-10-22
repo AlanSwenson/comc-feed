@@ -23,9 +23,12 @@ def find_info(entry):
     print(newDict["title"])
     print(newDict["Qty"])
     print(newDict["Sale Price"])
+    return newDict
 
 
-feed = get_feed()
-for entry in feed.entries:
-    find_info(entry)
+if __name__ == "__main__":
+    feed = get_feed()
+    newList = []
+    for entry in feed.entries:
+        newList.append(find_info(entry))
 

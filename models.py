@@ -1,27 +1,52 @@
 import click
+from datetime import datetime
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import orm
-from sqlalchemy import Column, Integer, String, Float, create_engine
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    Float,
+    create_engine,
+    ForeignKey,
+    TIMESTAMP,
+)
 
 import settings
 
-base = declarative_base()
+Base = declarative_base()
 engine = create_engine(settings.DATABASE_URL)
-base.metadata.bind = engine
+Base.metadata.bind = engine
 session = orm.scoped_session(orm.sessionmaker())(bind=engine)
 
 
-class Card(base):
-    __tablename__ = "cards"
+class Card(Base):
+    __tablename__ = "card"
 
     id = Column(Integer, primary_key=True)
     title = Column(String)
-    qty = Column(Integer)
-    price = Column(Float)
+    records = orm.relationship("Record", back_populates="card")
 
     def __repr__(self):
-        return f"Title: {self.title}\nQty: {self.qty} ------  Price: ${self.price}"
+        return f"Title: {self.title}\n"
+
+
+class Record(Base):
+    __tablename__ = "record"
+
+    id = Column(Integer, primary_key=True)
+    card_id = Column(Integer, ForeignKey("card.id"))
+    card = orm.relationship("Card", back_populates="records")
+
+    qty = Column(Integer)
+    price = Column(Float)
+    timestamp = Column(
+        "timestamp", TIMESTAMP(timezone=False), nullable=False, default=datetime.now()
+    )
+
+    def __repr__(self):
+        return f"Qty: {self.qty}\nPrice: ${self.price}\nTimestamp: {self.timestamp}"
 
 
 @click.group()
@@ -31,13 +56,13 @@ def cli():
 
 @cli.command()
 def initdb():
-    base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
     click.echo("Initialized the database")
 
 
 @cli.command()
 def dropdb():
-    base.metadata.drop_all()
+    Base.metadata.drop_all()
     click.echo("Dropped the database")
 
 

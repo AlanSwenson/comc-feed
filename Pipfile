@@ -10,6 +10,10 @@ pytest = "*"
 [packages]
 feedparser = '*'
 beautifulsoup4 = "*"
+sqlalchemy = "*"
+psycopg2 = "*"
+click = "*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.8"

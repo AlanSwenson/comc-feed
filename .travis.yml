@@ -13,7 +13,7 @@ python:
 # command to install dependencies
 install:
   - 'pip install pipenv'
-  - 'pipenv sync'
+  - 'pipenv sync --dev'
 
 
 # before_script:
@@ -27,6 +27,6 @@ branches:
   - gh-pages
   - /.*/
 
-  
+
 # after_success:
 #   - coveralls

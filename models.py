@@ -20,6 +20,9 @@ class Card(base):
     qty = Column(Integer)
     price = Column(Float)
 
+    def __repr__(self):
+        return f"Title: {self.title}\nQty: {self.qty} ------  Price: ${self.price}"
+
 
 @click.group()
 def cli():

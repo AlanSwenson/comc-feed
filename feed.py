@@ -38,4 +38,3 @@ if __name__ == "__main__":
 
     session.add_all(cards)
     session.commit()
-

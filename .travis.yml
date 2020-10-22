@@ -1,0 +1,32 @@
+language: python
+python:
+  - "3.8"
+  - "3.8-dev"  # 3.6 development branch
+  #- "3.7-dev"  # 3.7 development branch
+
+# addons:
+#   postgresql: "9.5"
+# services:
+#   - postgresql
+
+
+# command to install dependencies
+install:
+  - 'pip install pipenv'
+  - 'pipenv sync'
+
+
+# before_script:
+#   - psql -c 'create database travis_ci_test;' -U postgres
+# to start the test
+script:
+  - pytest
+  - black --check --verbose .
+branches:
+  only:
+  - gh-pages
+  - /.*/
+
+  
+# after_success:
+#   - coveralls

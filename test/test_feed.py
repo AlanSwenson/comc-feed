@@ -17,4 +17,3 @@ def test_find_info():
     )
     assert info["Qty"] == "42"
     assert info["Sale Price"] == "$44.23"
-

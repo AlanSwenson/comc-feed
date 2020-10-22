@@ -31,4 +31,3 @@ if __name__ == "__main__":
     newList = []
     for entry in feed.entries:
         newList.append(find_info(entry))
-

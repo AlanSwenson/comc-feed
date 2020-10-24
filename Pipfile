@@ -14,6 +14,8 @@ sqlalchemy = "*"
 psycopg2 = "*"
 click = "*"
 python-dotenv = "*"
+plotly = "*"
+dash = "*"
 
 [requires]
 python_version = "3.8"
